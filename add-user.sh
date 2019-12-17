@@ -22,6 +22,6 @@ GROUP=$(getent passwd $USER | awk -F':' '{print $4}')
 GROUP=$(getent group $GROUP | awk -F':' '{print $3}')
 
 install -d -m 0700 -o $USER -g $GROUP $HOME/.ssh
-install -m 0600 -o $USER -g $GROUP $HOME/.ssh/authorized_keys
+install -m 0600 -o $USER -g $GROUP /dev/null $HOME/.ssh/authorized_keys
 
-curl https://api.github.com/users/$USER/keys | jq -r .[].key >> $HOME/.ssh/authorized_keys
+curl -s https://api.github.com/users/$USER/keys | jq -r .[].key >> $HOME/.ssh/authorized_keys
