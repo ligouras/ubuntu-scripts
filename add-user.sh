@@ -13,7 +13,7 @@ hash jq 2>/dev/null || sudo DEBIAN_FRONTEND=noninteractive apt-get install jq -q
 
 USER=ligouras
 
-getent passwd $USER >/dev/null || useradd -D $USER
+getent passwd $USER >/dev/null || useradd -m $USER
 
 if [ "$(id -un)" != "$USER" ]; then
 	sudo -Hu $USER $0 $@
