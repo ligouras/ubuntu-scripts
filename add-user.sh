@@ -17,11 +17,11 @@ USER=ligouras
 
 getent passwd $USER >/dev/null || useradd -m $USER
 
-if [ "$(id -un)" != "$USER" ]; then
-	sudo -Hu $USER $0 $@
-else
-	install -d -m 0700 $HOME/.ssh
-	install -m 0600 $HOME/.ssh/authorized_keys
+HOME=$(getent passwd $USER | awk -F':' '{print $6}')
+GROUP=$(getent passwd $USER | awk -F':' '{print $4}')
+GROUP=$(getent group $GROUP | awk -F':' '{print $3}')
 
-	curl https://api.github.com/users/$USER/keys | jq -r .[].key >> $HOME/.ssh/authorized_keys
-fi
+install -d -m 0700 -o $USER -g $GROUP $HOME/.ssh
+install -m 0600 -o $USER -g $GROUP $HOME/.ssh/authorized_keys
+
+curl https://api.github.com/users/$USER/keys | jq -r .[].key >> $HOME/.ssh/authorized_keys
