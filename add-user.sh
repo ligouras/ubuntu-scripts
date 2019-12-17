@@ -15,7 +15,7 @@ hash jq 2>/dev/null || sudo DEBIAN_FRONTEND=noninteractive apt-get install jq -q
 
 USER=ligouras
 
-getent passwd $USER >/dev/null || useradd -m $USER
+getent passwd $USER >/dev/null || useradd -s /bin/bash -m $USER
 
 HOME=$(getent passwd $USER | awk -F':' '{print $6}')
 GROUP=$(getent passwd $USER | awk -F':' '{print $4}')
