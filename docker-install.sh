@@ -30,7 +30,7 @@ fi
 
 # docker-compose
 
-DOCKER_COMPOSE_URL="https://github.com/docker/compose/releases/download/1.28.4/docker-compose-$(uname -s)-$(uname -m)"
+DOCKER_COMPOSE_URL="https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)"
 
 [ -f /usr/local/bin/docker-compose ] || curl -qL ${DOCKER_COMPOSE_URL} -o /usr/local/bin/docker-compose
 [ -x /usr/local/bin/docker-compose ] || chmod +x /usr/local/bin/docker-compose
