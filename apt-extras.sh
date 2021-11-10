@@ -2,12 +2,18 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
-hash add-apt-repository 2>/dev/null
-if [ $? -ne 0 ]; then
-    apt-get install -y \
-        apt-transport-https \
-        ca-certificates \
-        curl \
-        gnupg-agent \
-        software-properties-common
-fi
+packages=(
+    "ca-certificates"
+    "apt-transport-https"
+    "software-properties-common"
+    "curl"
+    "gnupg"
+    "gnupg-agent"
+    "lsb-release"
+)
+
+for p in ${packages[@]}; do
+    if ! dpkg -s $p > /dev/null 2>&1; then
+      sudo apt-get install -y $p
+    fi
+done
