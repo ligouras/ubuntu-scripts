@@ -1,28 +1,11 @@
 #!/bin/bash
 
-if [ -f /var/cache/apt/pkgcache.bin ]; then
-    if (( $(date '+%s') - $(stat -c '%Y' /var/cache/apt/pkgcache.bin) > 86400 )) ; then
-	apt-get update
-    fi
-else
-    apt-get update
-fi
-
-# dependencies
-
-hash add-apt-repository 2>/dev/null
-if [ $? -ne 0 ]; then
-    apt-get install -y \
-        apt-transport-https \
-        ca-certificates \
-        curl \
-        gnupg-agent \
-        software-properties-common
-fi
+source apt-update.sh || exit 1
+source apt-extras.sh || exit 1
 
 # uninstall older versions of Docker
 
-apt-get remove docker docker-engine docker.io containerd runc
+apt-get remove -y docker docker-engine docker.io containerd runc
 
 # docker repository
 
